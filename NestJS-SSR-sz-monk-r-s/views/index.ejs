@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <title>Mozi foglalás</title>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">Mozi jegy foglalás</h2>
+
+    <% if (locals.errors) { %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <% errors.forEach(function(error) { %>
+            <li>
+              <%= error %>
+            </li>
+            <% }); %>
+        </ul>
+      </div>
+      <% } %>
+
+        <form method="POST" action="/book">
+          <div class="mb-3">
+            <label for="name" class="form-label">Név</label>
+            <input type="text" class="form-control" id="name" name="name" required
+              value="<%= locals.formData ? formData.name : '' %>">
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">E-mail cím</label>
+            <input type="email" class="form-control" id="email" name="email" required pattern=".+@.+\..+"
+              value="<%= locals.formData ? formData.email : '' %>">
+          </div>
+
+          <div class="mb-3">
+            <label for="date" class="form-label">Dátum és időpont</label>
+            <input type="datetime-local" class="form-control" id="date" name="date" required
+              min="<%= new Date().toISOString().slice(0, 16) %>" value="<%= locals.formData ? formData.date : '' %>">
+          </div>
+
+          <div class="mb-3">
+            <label for="viewers" class="form-label">Nézők száma</label>
+            <input type="number" class="form-control" id="viewers" name="viewers" min="1" max="10" required
+              value="<%= locals.formData ? formData.viewers : '1' %>">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Foglalás</button>
+        </form>
+  </div>
+
+</body>
+
+</html>
